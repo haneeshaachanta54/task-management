@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login & Register | Ludiflex</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <style>
+    /* IMPORT FONT */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    :root {
+      --primary-color: #0D1936;
+      --secondary-color: #535354;
+      --background-color: #EFEFEF;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --white-color: #FFF;
+      --black-color: #000;
+      --input-border-color: #E3E4E6;
+      --transition-3s: 0.3s;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: var(--background-color);
+    }
+
+    .wrapper {
+      position: relative;
+      width: 430px;
+      height: 500px;
+      background-color: var(--white-color);
+      border-radius: 15px;
+      padding: 120px 32px 64px;
+      border: 1px solid var(--primary-color);
+      box-shadow: 0 8px 15px var(--shadow-color);
+      transition: var(--transition-3s);
+      overflow: hidden;
+    }
+
+    .form-header {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 140px;
+      height: 70px;
+      background-color: var(--primary-color);
+      border-radius: 0 0 20px 20px;
+    }
+
+    .form-header::before,
+    .form-header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 30px;
+      height: 30px;
+    }
+
+    .form-header::before {
+      left: -30px;
+      border-top-right-radius: 50%;
+      box-shadow: 15px 0 0 var(--primary-color);
+    }
+
+    .form-header::after {
+      right: -30px;
+      border-top-left-radius: 50%;
+      box-shadow: -15px 0 0 var(--primary-color);
+    }
+
+    .titles {
+      position: relative;
+    }
+
+    .title-login,
+    .title-register {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--white-color);
+      font-size: 24px;
+      transition: var(--transition-3s);
+    }
+
+    .title-register {
+      top: 50px;
+    }
+
+    .role-switch {
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+    }
+
+    .role-switch button {
+      padding: 8px 20px;
+      border: 1px solid var(--primary-color);
+      background-color: var(--white-color);
+      color: var(--primary-color);
+      font-weight: 600;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .role-switch button.active {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+    }
+
+    .login-form,
+    .register-form {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 85%;
+      transition: var(--transition-3s);
+    }
+
+    .register-form {
+      left: 150%;
+    }
+
+    .input-box {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      margin: 20px 0;
+    }
+
+    .input-field {
+      width: 100%;
+      height: 55px;
+      font-size: 16px;
+      padding: 0 20px;
+      background: transparent;
+      color: var(--black-color);
+      border: 1px solid var(--input-border-color);
+      border-radius: 30px;
+      outline: none;
+      transition: var(--transition-3s);
+    }
+
+    .input-field:focus {
+      border: 1px solid var(--primary-color);
+    }
+
+    .label {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: var(--secondary-color);
+      transition: 0.2s;
+      cursor: text;
+    }
+
+    .input-field:focus ~ .label,
+    .input-field:valid ~ .label {
+      top: 0;
+      font-size: 14px;
+      background-color: var(--white-color);
+      color: var(--primary-color);
+      padding: 0 10px;
+    }
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      right: 25px;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: var(--secondary-color);
+    }
+
+    .form-cols {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+
+    .col-1 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      height: 50px;
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      font-size: 16px;
+      font-weight: 500;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: var(--transition-3s);
+    }
+
+    .btn-submit:hover {
+      gap: 15px;
+    }
+
+    .switch-form {
+      text-align: center;
+    }
+
+    .switch-form a {
+      font-weight: 500;
+    }
+
+    @media only screen and (max-width: 564px) {
+      .wrapper {
+        margin: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="form-header">
+      <div class="titles">
+        <div class="title-login">Login</div>
+        <div class="title-register">Register</div>
+      </div>
+    </div>
+
+    <!-- Role Buttons -->
+    <div class="role-switch">
+      <button id="employeeBtn" class="active" onclick="setRole('employee')">Employee</button>
+      <button id="managerBtn" onclick="setRole('manager')">Manager</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" class="login-form" method="POST">
+      <div class="input-box">
+        <input type="text" class="input-field" name="email" required />
+        <label class="label">Email</label>
+        <i class='bx bx-envelope icon'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" class="input-field" name="password" required />
+        <label class="label">Password</label>
+        <i class='bx bx-lock-alt icon'></i>
+      </div>
+      <div class="form-cols">
+        <div class="col-1"></div>
+        <div class="col-2"><a href="#">Forgot password?</a></div>
+      </div>
+      <div class="input-box">
+        <button class="btn-submit" type="submit">Sign In <i class='bx bx-log-in'></i></button>
+      </div>
+      <div class="switch-form">
+        <span>Don't have an account? <a href="#" onclick="registerFunction()">Register</a></span>
+      </div>
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form id="registerForm" class="register-form" method="POST">
+      <div class="input-box">
+        <input type="text" class="input-field" name="username" required />
+        <label class="label">Username</label>
+        <i class='bx bx-user icon'></i>
+      </div>
+      <div class="input-box">
+        <input type="text" class="input-field" name="email" required />
+        <label class="label">Email</label>
+        <i class='bx bx-envelope icon'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" class="input-field" name="password" required />
+        <label class="label">Password</label>
+        <i class='bx bx-lock-alt icon'></i>
+      </div>
+      <div class="form-cols">
+        <div class="col-1">
+          <input type="checkbox" id="agree" required />
+          <label for="agree"> I agree to terms & conditions</label>
+        </div>
+      </div>
+      <div class="input-box">
+        <button class="btn-submit" type="submit">Sign Up <i class='bx bx-user-plus'></i></button>
+      </div>
+      <div class="switch-form">
+        <span>Already have an account? <a href="#" onclick="loginFunction()">Login</a></span>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const loginForm = document.querySelector(".login-form");
+    const registerForm = document.querySelector(".register-form");
+    const wrapper = document.querySelector(".wrapper");
+    const loginTitle = document.querySelector(".title-login");
+    const registerTitle = document.querySelector(".title-register");
+
+    const employeeBtn = document.getElementById("employeeBtn");
+    const managerBtn = document.getElementById("managerBtn");
+
+    let currentRole = "employee";
+
+    function setRole(role) {
+      currentRole = role;
+
+      // Highlight active button
+      if (role === "employee") {
+        employeeBtn.classList.add("active");
+        managerBtn.classList.remove("active");
+      } else {
+        managerBtn.classList.add("active");
+        employeeBtn.classList.remove("active");
+      }
+
+      // Set form actions
+      document.getElementById("loginForm").action = role + "_db.php";
+      document.getElementById("registerForm").action = role + "_db.php";
+    }
+
+    function loginFunction() {
+      loginForm.style.left = "50%";
+      loginForm.style.opacity = 1;
+      registerForm.style.left = "150%";
+      registerForm.style.opacity = 0;
+      wrapper.style.height = "500px";
+      loginTitle.style.top = "50%";
+      loginTitle.style.opacity = 1;
+      registerTitle.style.top = "50px";
+      registerTitle.style.opacity = 0;
+    }
+
+    function registerFunction() {
+      loginForm.style.left = "-50%";
+      loginForm.style.opacity = 0;
+      registerForm.style.left = "50%";
+      registerForm.style.opacity = 1;
+      wrapper.style.height = "580px";
+      loginTitle.style.top = "-60px";
+      loginTitle.style.opacity = 0;
+      registerTitle.style.top = "50%";
+      registerTitle.style.opacity = 1;
+    }
+
+    // Set default action to employee on load
+    window.onload = () => setRole("employee");
+  </script>
+</body>
+</html>
